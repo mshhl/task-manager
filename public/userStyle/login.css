@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: #222;
+    
+}
+.container{
+    width: 90%;
+    max-width: 470px;
+    height: 350px;
+    background-color: whitesmoke;
+    margin: 100px auto;
+    border: 0;
+    outline: 0;
+    border-radius: 20px;
+    padding: 20px;
+
+}
+.heading{
+ text-align: center;
+ font-size: 30px;
+ font-weight: 560;
+
+}
+form{
+    margin: 30px 50px;
+
+}
+form .form-group{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    
+}
+.form-group label{
+    font-size: 18px;
+    font-weight: 540;
+    margin-bottom: 6px;
+}
+.form-group input{
+    border: 0;
+    outline: 0;
+   border-radius: 10px;
+   width: 320px;
+   height: 35px;
+   color: grey;
+   padding: 10px;
+}
+.smt-btn{
+    width: 320px;
+    height: 35px;
+    background-color: purple;
+    border: 0;
+    outline: 0;
+    border-radius: 20px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+.direct-signup{
+    margin-top: 10px;
+    font-size: 18px;
+}
