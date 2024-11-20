@@ -10,6 +10,15 @@
     <div class="container">
         <h2 class="heading">Sign Up</h2>
         <form action="/register" method="post">
+            <%
+               
+               if(typeof userExist !== 'undefined'){
+                  
+                %>
+                <p class="errorMessage" style="color: red;"><%=userExist %></p>
+                <%
+               }
+               %>
             <div class="form-group">
                 <label for="fullname">FullName</label>
                 <input type="text" placeholder="Enter your fullname" required spellcheck="false" name="fullname">

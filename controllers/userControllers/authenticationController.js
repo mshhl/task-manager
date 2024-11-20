@@ -1,4 +1,7 @@
 const { load } = require("mime");
+const bcrypt = require("bcrypt");
+const {LocalStorage} = require("node-localstorage");
+const localStorage = new LocalStorage('./scratch')
 
 const loadLoginPage = function(req,res){
     console.log("mashallah response successfull")
@@ -9,7 +12,7 @@ const loadLoginPage = function(req,res){
 const loadSignupPage = function(req,res){
     res.render("userViews/signup");
 }
-const registerUser = function(req,res){
+const registerUser = async function(req,res){
     console.log("hey hello register user");
 
     const validateEmail = function(email){
@@ -31,8 +34,49 @@ const registerUser = function(req,res){
            res.render("userViews/signup",{passwordError:"password doesn't match"})
            return;
     }else{
-        res.redirect("/");
-    }
+       
+        const npassword = await bcrypt.hash(password,10);
+        const object = {
+            fullname,
+            email,
+            password:npassword
+        }
+        
+        
+        const custArray = localStorage.getItem("customers")
+        if(custArray){
+            const customerArray = localStorage.getItem("customers")
+
+            if(customerArray){
+                
+                const parseArray  = JSON.parse(customerArray)
+                
+                for(let userobj of parseArray){
+                    
+                    if(userobj.fullname === fullname || userobj.email === email){
+                        res.render("userViews/signup",{userExist:"User already exist"});
+                        return;
+                    }
+                }
+                parseArray.push(object);
+                localStorage.setItem("customers",JSON.stringify(parseArray));
+                res.redirect("/");
+    
+               
+    
+            
+        }
+
+        }else{
+            const customerArray = [];
+             customerArray.push(object);
+            localStorage.setItem("customers",JSON.stringify(customerArray));
+            res.redirect("/");
+        }
+        
+        
+        
+ }
 }
 module.exports = {
     loadLoginPage,
