@@ -1,20 +1,37 @@
 const jwt = require("jsonwebtoken");
 
 const jwtMiddleWare = function(req,res,next){
+    
    const token = req.session.jwt ;
    if(token){
     const decoded = jwt.verify(token,process.env.TOKEN_SECRET);
     if(decoded){
         res.redirect("/home");
     }else{
+        
        next();
-        return;
+       
     }
    }else{
+    console.log("jwtmiddlware")
     next();
-    return;
+    
    }
 }
+const allTimeMiddleware = function(req,res,next){
+    const token = req.session.jwt;
+    if(token){
+        const decoded = jwt.verify(token,process.env.TOKEN_SECRET);
+        if(decoded){
+            next();
+        }else{
+            res.redirect("/");
+        }
+    }else{
+        res.redirect("/");
+    }
+}
 module.exports = {
-    jwtMiddleWare
+    jwtMiddleWare,
+    allTimeMiddleware
 }

@@ -10,6 +10,13 @@
     <div class="container">
         <h2 class="heading">Login</h2>
         <form action="" method="post">
+            <% 
+            if(typeof otherError  !==  "undefined"){
+              %>
+              <p style="color: red; margin-top: 6px;"><%= otherError %></p>
+              <%
+            }
+            %>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" placeholder="Enter your Email" required spellcheck="false" name="email">

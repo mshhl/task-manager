@@ -52,6 +52,8 @@ const userLogin =   async function(req,res){
         res.redirect("/home")
        }
        
+    }else{
+        res.render("userViews/login",{otherError:"User doesn't match"});
     }
   } catch (error) {
     console.log(error)
