@@ -9,15 +9,32 @@
 <body>
     <div class="container">
         <h2 class="heading">Sign Up</h2>
-        <form action="" method="post">
+        <form action="/register" method="post">
             <div class="form-group">
                 <label for="fullname">FullName</label>
                 <input type="text" placeholder="Enter your fullname" required spellcheck="false" name="fullname">
             </div>
+            <%
+               
+               if(typeof errorMessage !== 'undefined'){
+                  
+                %>
+                <p class="errorMessage" style="color: red;"><%=errorMessage %></p>
+                <%
+               }
+               %>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" placeholder="Enter your Email" required spellcheck="false" name="email">
             </div>
+            <%
+               
+               if(typeof emailError !== 'undefined'){
+                %>
+                <p class="emailError" style="color: red;margin-top: 6px;"><%=emailError %></p>
+                <%
+               }
+               %>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Enter your password" required spellcheck="false">
@@ -26,6 +43,14 @@
                 <label for="cfmpassword">confirm password</label>
                 <input type="password" placeholder="Enter password again" name="cfmpassword" required spellcheck="false">
             </div>
+            <%
+            
+             if(typeof passwordError !== 'undefined'){
+              %>
+                <p class="emailError" style="color: red; margin-top: 6px;"><%= passwordError %></p>
+              <%
+            }
+             %>
             <button class="smt-btn" type="submit">Sign Up</button>
         </form>
     </div>
