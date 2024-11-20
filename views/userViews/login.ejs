@@ -14,10 +14,24 @@
                 <label for="email">Email</label>
                 <input type="email" placeholder="Enter your Email" required spellcheck="false" name="email">
             </div>
+            <% 
+              if(typeof emailError  !==  "undefined"){
+                %>
+                <p style="color: red; margin-top: 6px;"><%= emailError %></p>
+                <%
+              }
+              %>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Enter your password" required spellcheck="false">
             </div>
+            <% 
+              if(typeof passwordError  !==  "undefined"){
+                %>
+                <p style="color: red; margin-top: 6px;"><%= passwordError %></p>
+                <%
+              }
+              %>
             <button class="smt-btn" type="submit">Login</button>
             <p class="direct-signup">Didn't registered? <a href="/register">sign Up here</a></p>
         </form>

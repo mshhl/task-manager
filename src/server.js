@@ -3,6 +3,15 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
 const authenticationRouter = require("../router/userRoute/authenticationRouter");
+const session = require("express-session");
+
+app.use(session({
+    secret:process.env.TOKEN_SECRET,
+    resave:false,
+    saveUninitialized:true,
+    cookie:{secure:false}
+
+}))
 
 // we set the view engine and view directory
 app.set("views","./views")

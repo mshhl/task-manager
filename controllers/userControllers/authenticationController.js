@@ -1,12 +1,61 @@
 const { load } = require("mime");
 const bcrypt = require("bcrypt");
 const {LocalStorage} = require("node-localstorage");
+const { cursorTo } = require("readline");
 const localStorage = new LocalStorage('./scratch')
+const jwt = require("jsonwebtoken");
+const session = require("express-session");
+ 
+// login logic
 
 const loadLoginPage = function(req,res){
     console.log("mashallah response successfull")
     res.render("userViews/login");
     
+}
+const userLogin =   async function(req,res){
+  try {
+    const {email,password} = req.body;
+    const validateEmail = function(email){
+        const  regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email)
+
+    }
+    if(!validateEmail(email)){
+        res.render("userViews/login",{emailError:"Email is not valid!"});
+        return;
+    }else if(password == ""){
+        res.render("userViews/login",{passwordError:"password is not valid"});
+        return;
+    }
+    const customerArray = localStorage.getItem("customers");
+    const parseArray = JSON.parse(customerArray);
+    for(let i = 0;i<parseArray.length;i++){
+        const dcrptPassword =  await bcrypt.compare(password,parseArray[i].password);
+        if(email === parseArray[i].email && dcrptPassword){
+            var loginUserDetails  = parseArray[i];
+            break;
+        }
+    }
+    if(loginUserDetails){
+       const generatateToken = function(payload){
+        const secret = process.env.TOKEN_SECRET;
+        const options = {
+            expiresIn:"5m"
+        }
+        const token = jwt.sign(payload,secret,options);
+        return token;
+       }
+       const userToken = generatateToken(loginUserDetails)
+       if(userToken){
+        req.session.jwt = userToken;
+        res.redirect("/home")
+       }
+       
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 // registration logic
 const loadSignupPage = function(req,res){
@@ -81,5 +130,6 @@ const registerUser = async function(req,res){
 module.exports = {
     loadLoginPage,
     loadSignupPage,
-    registerUser
+    registerUser,
+    userLogin
 }
